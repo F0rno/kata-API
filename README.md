@@ -94,7 +94,4 @@ Ir más lejos
 
 ## Colaboradores (idiomas en orden alfabético)
 
-[Java](https://github.com/F0rno/kata-API/tree/F0rno/Java) → [F0rno][saphirevert-url]
-
-[saphirevert-shield]: https://badgen.net/badge/Github/SaphireVert/green?icon=https://svgshare.com/i/Srf.svg
-[saphirevert-url]: https://github.com/saphirevert/
+[Java](https://github.com/F0rno/kata-API/tree/F0rno/Java) → F0rno
