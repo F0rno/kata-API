@@ -94,4 +94,4 @@ Ir más lejos
 
 ## Colaboradores (idiomas en orden alfabético)
 
-[Java](https://github.com/F0rno/kata-API/tree/F0rno/Java) → F0rno
+[F0rno](https://github.com/F0rno/kata-API/tree/F0rno/Java) → Java
