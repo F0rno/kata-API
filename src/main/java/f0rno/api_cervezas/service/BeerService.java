@@ -1,16 +1,18 @@
 package f0rno.api_cervezas.service;
 
-import f0rno.api_cervezas.model.Beer;
+import f0rno.api_cervezas.model.Beers;
+import f0rno.api_cervezas.repository.BeerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BeerService {
-    public Optional<Beer> getBeer(int id) {
-        return null;
+    BeerRepository beerRepository;
+    @Autowired
+    public BeerService(BeerRepository beerRepository) {
+        this.beerRepository = beerRepository;
+    }
+    public Beers getBeer(int id) {
+        return beerRepository.findById(id).orElse(null);
     }
 }
