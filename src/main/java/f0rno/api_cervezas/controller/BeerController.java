@@ -3,9 +3,9 @@ package f0rno.api_cervezas.controller;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class BeerController {
@@ -15,7 +15,23 @@ public class BeerController {
         this.beerService = beerService;
     }
     @GetMapping("/beer")
+    public List<Beers> getAllBeers() {
+        return beerService.getAllBeers();
+    }
+    @GetMapping("/beer/{id}")
     public Beers getBeer(@RequestParam int id) {
         return beerService.getBeer(id);
+    }
+    @PostMapping("/beer")
+    public Beers postBeer(@RequestParam int brewery_id, @RequestParam String name, @RequestParam int cat_id, @RequestParam int style_id, @RequestParam float abv, @RequestParam int ibu, @RequestParam float srm, @RequestParam int upc, @RequestParam String filepath, @RequestParam String descript, @RequestParam String last_mod) {
+        return beerService.postBeer(brewery_id, name, cat_id, style_id, abv, ibu, srm, upc, filepath, descript, last_mod);
+    }
+    @PutMapping("/beer/{id}")
+    public Beers putBeer(@RequestParam int id, @RequestParam int brewery_id, @RequestParam String name, @RequestParam int cat_id, @RequestParam int style_id, @RequestParam float abv, @RequestParam int ibu, @RequestParam float srm, @RequestParam int upc, @RequestParam String filepath, @RequestParam String descript, @RequestParam String last_mod) {
+        return beerService.putBeer(id, brewery_id, name, cat_id, style_id, abv, ibu, srm, upc, filepath, descript, last_mod);
+    }
+    @DeleteMapping("/beer/{id}")
+    public void deleteBeer(@RequestParam int id) {
+        beerService.deleteBeer(id);
     }
 }
