@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Beers {
+    // TODO añadir anotiacion de foreign key "JUANJU dice q no es lo mismo, haber no digo q no sea lo mismo pero q forenge key exactamento, son 3 anotaciones para una foren key"
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
