@@ -48,25 +48,32 @@ public class BeerService {
         return beerRepository.save(beer);
     }
     public Beers putBeer(int id, int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) {
-        if (beerRepository.existsById(id)) {
-            Beers beer = Beers.builder()
-                    .id(id)
-                    .brewery_id(brewery_id)
-                    .name(name)
-                    .cat_id(cat_id)
-                    .style_id(style_id)
-                    .abv(abv)
-                    .ibu(ibu)
-                    .srm(srm)
-                    .upc(upc)
-                    .filepath(filepath)
-                    .descript(descript)
-                    .last_mod(new Date(last_mod))
-                    .build();
-            return beerRepository.save(beer);
-        } else {
+        if (!beerRepository.existsById(id)) {
             return null;
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date;
+        try {
+            date = dateFormat.parse(last_mod);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+        Beers beer = Beers.builder()
+                .id(id)
+                .brewery_id(brewery_id)
+                .name(name)
+                .cat_id(cat_id)
+                .style_id(style_id)
+                .abv(abv)
+                .ibu(ibu)
+                .srm(srm)
+                .upc(upc)
+                .filepath(filepath)
+                .descript(descript)
+                .last_mod(date)
+                .build();
+        return beerRepository.save(beer);
     }
     public void deleteBeer(int id) {
         beerRepository.deleteById(id);
