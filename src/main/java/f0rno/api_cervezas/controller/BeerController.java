@@ -1,8 +1,10 @@
 package f0rno.api_cervezas.controller;
 
+import f0rno.api_cervezas.error.beer.BeerNotFoundException;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +17,11 @@ public class BeerController {
         this.beerService = beerService;
     }
     @GetMapping("/beers")
-    public List<Beers> getAllBeers() {
+    public ResponseEntity<List<Beers>> getAllBeers() {
         return beerService.getAllBeers();
     }
     @GetMapping("/beer/{id}")
-    public Beers getBeer(@PathVariable int id) {
+    public ResponseEntity<Beers> getBeer(@PathVariable int id) throws BeerNotFoundException {
         return beerService.getBeer(id);
     }
     @PostMapping("/beer")

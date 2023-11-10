@@ -1,8 +1,10 @@
 package f0rno.api_cervezas.service;
 
+import f0rno.api_cervezas.error.beer.BeerNotFoundException;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.repository.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -17,11 +19,13 @@ public class BeerService {
     public BeerService(BeerRepository beerRepository) {
         this.beerRepository = beerRepository;
     }
-    public List<Beers> getAllBeers() {
-        return beerRepository.findAll();
+    public ResponseEntity<List<Beers>> getAllBeers() {
+        return ResponseEntity.ok(beerRepository.findAll());
     }
-    public Beers getBeer(int id) {
-        return beerRepository.findById(id).orElse(null);
+    public ResponseEntity<Beers> getBeer(int id) throws BeerNotFoundException {
+        return beerRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new BeerNotFoundException(id));
     }
     public Beers postBeer(int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
