@@ -1,5 +1,7 @@
 package f0rno.api_cervezas.service;
 
+import f0rno.api_cervezas.error.DateParseException;
+import f0rno.api_cervezas.error.beer.BeerAlreadyExistsException;
 import f0rno.api_cervezas.error.beer.BeerNotFoundException;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.repository.BeerRepository;
@@ -27,14 +29,14 @@ public class BeerService {
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new BeerNotFoundException(id));
     }
-    public Beers postBeer(int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) {
+    public ResponseEntity<Beers> postBeer(int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) throws DateParseException, BeerAlreadyExistsException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date;
         try {
             date = dateFormat.parse(last_mod);
         } catch (ParseException e) {
             e.printStackTrace();
-            return null;
+            throw new DateParseException(last_mod);
         }
         Beers beer = Beers.builder()
                 .brewery_id(brewery_id)
@@ -49,7 +51,10 @@ public class BeerService {
                 .descript(descript)
                 .last_mod(date)
                 .build();
-        return beerRepository.save(beer);
+        if (beerRepository.existsByName(name)) {
+            throw new BeerAlreadyExistsException();
+        }
+        return ResponseEntity.ok(beerRepository.save(beer));
     }
     public Beers putBeer(int id, int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) {
         if (!beerRepository.existsById(id)) {

@@ -41,4 +41,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleStyleNotFoundException(StyleNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = {DateParseException.class})
+    public ResponseEntity<Object> handleDateParseException(DateParseException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
