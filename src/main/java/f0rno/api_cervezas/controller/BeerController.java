@@ -31,7 +31,7 @@ public class BeerController {
         return beerService.postBeer(brewery_id, name, cat_id, style_id, abv, ibu, srm, upc, filepath, descript, last_mod);
     }
     @PutMapping("/beer/{id}")
-    public Beers putBeer(@PathVariable int id, @RequestParam int brewery_id, @RequestParam String name, @RequestParam int cat_id, @RequestParam int style_id, @RequestParam float abv, @RequestParam int ibu, @RequestParam float srm, @RequestParam int upc, @RequestParam String filepath, @RequestParam String descript, @RequestParam String last_mod) {
+    public ResponseEntity<Beers> putBeer(@PathVariable int id, @RequestParam int brewery_id, @RequestParam String name, @RequestParam int cat_id, @RequestParam int style_id, @RequestParam float abv, @RequestParam int ibu, @RequestParam float srm, @RequestParam int upc, @RequestParam String filepath, @RequestParam String descript, @RequestParam String last_mod) throws BeerNotFoundException {
         return beerService.putBeer(id, brewery_id, name, cat_id, style_id, abv, ibu, srm, upc, filepath, descript, last_mod);
     }
     // TODO PATCH

@@ -30,6 +30,9 @@ public class BeerService {
                 .orElseThrow(() -> new BeerNotFoundException(id));
     }
     public ResponseEntity<Beers> postBeer(int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) throws DateParseException, BeerAlreadyExistsException {
+        if (beerRepository.existsByName(name)) {
+            throw new BeerAlreadyExistsException();
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date;
         try {
@@ -51,14 +54,11 @@ public class BeerService {
                 .descript(descript)
                 .last_mod(date)
                 .build();
-        if (beerRepository.existsByName(name)) {
-            throw new BeerAlreadyExistsException();
-        }
         return ResponseEntity.ok(beerRepository.save(beer));
     }
-    public Beers putBeer(int id, int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) {
+    public ResponseEntity<Beers> putBeer(int id, int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) throws BeerNotFoundException {
         if (!beerRepository.existsById(id)) {
-            return null;
+            throw new BeerNotFoundException(id);
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date;
@@ -82,7 +82,7 @@ public class BeerService {
                 .descript(descript)
                 .last_mod(date)
                 .build();
-        return beerRepository.save(beer);
+        return ResponseEntity.ok(beerRepository.save(beer));
     }
     public void deleteBeer(int id) {
         beerRepository.deleteById(id);
