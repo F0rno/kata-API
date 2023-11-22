@@ -6,6 +6,8 @@ import f0rno.api_cervezas.error.beer.BeerNotFoundException;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,11 @@ public class BeerController {
         this.beerService = beerService;
     }
     @GetMapping("/beers")
-    public ResponseEntity<List<Beers>> getAllBeers() {
-        return beerService.getAllBeers();
+    public ResponseEntity<Page<Beers>> getAllBeers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10")  int size) {
+        Page<Beers> beers = beerService.getAllBeers(page, size);
+        return new ResponseEntity<>(beers, HttpStatus.OK);
     }
     @GetMapping("/beer/{id}")
     public ResponseEntity<Beers> getBeer(@PathVariable int id) throws BeerNotFoundException {

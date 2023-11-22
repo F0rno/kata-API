@@ -6,6 +6,8 @@ import f0rno.api_cervezas.error.beer.BeerNotFoundException;
 import f0rno.api_cervezas.model.Beers;
 import f0rno.api_cervezas.repository.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,9 @@ public class BeerService {
     public BeerService(BeerRepository beerRepository) {
         this.beerRepository = beerRepository;
     }
-    public ResponseEntity<List<Beers>> getAllBeers() {
-        return ResponseEntity.ok(beerRepository.findAll());
+    public Page<Beers> getAllBeers(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return beerRepository.findAll(pageable);
     }
     public ResponseEntity<Beers> getBeer(int id) throws BeerNotFoundException {
         return beerRepository.findById(id)
