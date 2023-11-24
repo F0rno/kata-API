@@ -5,6 +5,8 @@
 
 # Kata API
 
+## [PETICIONES EN INSOMNIA](./Insomnia.json)
+
 Kata : crear una [API](https://github.com/OAI/OpenAPI-Specification)
 funcional [CRUD](https://www.codecademy.com/articles/what-is-crud) sobre
 varias tablas en MySQL.
