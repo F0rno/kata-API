@@ -3,6 +3,8 @@ package f0rno.api_cervezas.service;
 import f0rno.api_cervezas.model.Breweries;
 import f0rno.api_cervezas.repository.BreweriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class BreweriesService {
     public BreweriesService(BreweriesRepository breweriesRepository) {
         this.breweriesRepository = breweriesRepository;
     }
-    public List<Breweries> getAllBreweries() {
-        return breweriesRepository.findAll();
+    public Page<Breweries> getAllBreweries(int page, int size) {
+        return breweriesRepository.findAll(PageRequest.of(page, size));
     }
     public Breweries getBrewery(int id) {
         return breweriesRepository.findById(id).orElse(null);
