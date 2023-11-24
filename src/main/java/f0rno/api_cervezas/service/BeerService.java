@@ -8,6 +8,7 @@ import f0rno.api_cervezas.repository.BeerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,7 @@ public class BeerService {
                 .descript(descript)
                 .last_mod(date)
                 .build();
-        return ResponseEntity.ok(beerRepository.save(beer));
+        return ResponseEntity.status(HttpStatus.CREATED).body(beerRepository.save(beer));
     }
     public ResponseEntity<Beers> putBeer(int id, int brewery_id, String name, int cat_id, int style_id, float abv, int ibu, float srm, int upc, String filepath, String descript, String last_mod) throws BeerNotFoundException {
         if (!beerRepository.existsById(id)) {
