@@ -1,5 +1,6 @@
 package f0rno.api_cervezas.controller;
 
+import f0rno.api_cervezas.error.brewery.BreweryNotFoundException;
 import f0rno.api_cervezas.model.Breweries;
 import f0rno.api_cervezas.service.BreweriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class BreweriesController {
         return ResponseEntity.ok(breweries);
     }
     @GetMapping("/brewerie/{id}")
-    public Breweries getBrewery(@PathVariable int id) {
+    public ResponseEntity<Breweries> getBrewery(@PathVariable int id) throws BreweryNotFoundException {
         return breweriesService.getBrewery(id);
     }
 }
